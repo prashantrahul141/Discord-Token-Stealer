@@ -8,23 +8,25 @@ except:
     exit()
 
 from time import sleep
-from constants import LOGIN_DISCORD_URL, QR_ELEMENT_SELECTOR
+from constants import LOGIN_DISCORD_URL, QR_ELEMENT_SELECTOR, IMAGE_LOCATION
 
 
-class Program:
+class SeleniumDriver:
     def __init__(self):
+        pass
+
+    def start(self):
         logger.debug("Starting firefox.")
         try:
             self.driver = webdriver.Firefox()
         except:
             logger.error("could not start firefox, exiting.")
             exit()
-
-    def start(self):
         logger.debug("opening discord log in page.")
         self.driver.get(LOGIN_DISCORD_URL)
+        self.getQRCodeElementAndSave()
 
-    def getQRCodeElementAndSave(self, screenshotPath: str) -> bool:
+    def getQRCodeElementAndSave(self, screenshotPath: str = IMAGE_LOCATION) -> bool:
         logger.info("sleeping 5 seconds for qr image to load.")
         sleep(5)
         logger.debug("searching qr html element")
