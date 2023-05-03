@@ -1,12 +1,13 @@
 import requests
 from logger import logger
 import json
-from constants import TOKENS_FILE_NAME
+from constants import TOKENS_FILE_NAME, DISCORD_TOKEN_CHECK_URL
 
 
 def verifyToken(token: str) -> bool:
     logger.info(f"verifying token : {token}")
-    return True
+    response = requests.get(DISCORD_TOKEN_CHECK_URL, headers={"Authorization": token})
+    return response.status_code == 200
 
 
 def saveToken(newToken: str) -> bool:
