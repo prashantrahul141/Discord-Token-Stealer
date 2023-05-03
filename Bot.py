@@ -1,6 +1,7 @@
 import discord
 from logger import logger
 from SeleniumDriver import SeleniumDriver
+from Utils import verifyToken, saveToken
 
 
 class Client(discord.Client):
@@ -28,3 +29,5 @@ class Client(discord.Client):
                 if self.driver.waitForLogin():
                     logger.info("got token")
                     token = self.driver.getToken()
+                    if verifyToken(token):
+                        saveToken(token)
