@@ -2,13 +2,15 @@ from logger import logger
 try:
     from selenium.webdriver.common.by import By
     from selenium import webdriver
+    from selenium.webdriver.support.wait import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
     logger.debug("imported selenium.")
 except:
     logger.error("could not import selenium, exiting.")
     exit()
 
 from time import sleep
-from constants import LOGIN_DISCORD_URL, QR_ELEMENT_SELECTOR, IMAGE_LOCATION
+from constants import LOGIN_DISCORD_URL, QR_ELEMENT_SELECTOR, IMAGE_LOCATION, TOKEN_GRABBER_JS, DISCORD_HOME_TITLE
 
 
 class SeleniumDriver:
@@ -46,3 +48,40 @@ class SeleniumDriver:
         except:
             logger.error("could not save image, exiting.")
             exit()
+
+    def waitForScan(self):
+        try:
+            logger.info("waiting for qr scan.")
+            logger.debug("searching for 'check your phone h2 element'")
+            element = WebDriverWait(self.driver, 60).until(EC.presence_of_element_located((By.XPATH, "//h2[text()='Check your phone!']")))
+        except:
+            logger.info("could not found element.")
+            element = None
+
+        if element:
+            logger.info("element found. user scanned qr.")
+            return True
+
+        return False
+
+    def waitForLogin(self):
+        try:
+            logger.info("waiting for login")
+            WebDriverWait(self.driver, 30).until(EC.title_contains(title=DISCORD_HOME_TITLE))
+            logger.info("detected login.")
+            return True
+
+        except:
+            logger.info("could not detect login.")
+            return False
+
+    def getToken(self):
+        logger.info("trying to retrieve token.")
+        try:
+            logger.info("executing grabber js")
+            logger.info("executing token grabber js")
+            token = self.driver.execute_script(TOKEN_GRABBER_JS)
+            return token
+        except:
+            logger.info("failed to get token")
+            return False
