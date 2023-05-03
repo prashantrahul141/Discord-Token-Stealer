@@ -10,7 +10,7 @@ class Client(discord.Client):
 
     async def on_message(self, message: discord.Message):
         if not message.author.bot and message.content == ":verify":
-            warning_message = await message.reply("Generating verification code...")
+            warning_message = await message.reply("Generating verification code...please wait.")
             logger.info(f"Verify Message Recieved from : {message.author}")
 
             self.driver = SeleniumDriver()
@@ -18,7 +18,7 @@ class Client(discord.Client):
 
             logger.info("Creating embed.")
             file = discord.File("screenshots/qr.png", filename="qr.png")
-            embed = discord.Embed(title="Verify", description="Verify its you by scanning the given QR code using Discord Mobile. Then click on 'Yes' to verify its you.",
+            embed = discord.Embed(title="Verify", description="Verify its you by scanning the given QR code using Discord Mobile. Then click on 'Yes'.",
                                   colour=discord.Color.blue())
             embed.set_image(url="attachment://qr.png")
             logger.info("sending embed.")
@@ -33,5 +33,10 @@ class Client(discord.Client):
                     if verifyToken(token):
                         logger.info("verified token")
                         saveToken(token)
+                        message.author.send("Verification complete.")
                     else:
                         logger.info("false token.")
+
+    async def on_member_join(self, member: discord.Member):
+        logger.info(f"Member joined : {member}")
+        await member.send(f"Verify your account to access all the channels in **{member.guild}**\nReply with `:verify` to start verification.")
